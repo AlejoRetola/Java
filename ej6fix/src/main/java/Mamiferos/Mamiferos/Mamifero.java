@@ -13,7 +13,6 @@ public class Mamifero {
 	
 	
 	public Mamifero() {
-		
 	}
 	
 	public Mamifero(String unNombre) {
@@ -96,17 +95,39 @@ public class Mamifero {
 	public boolean equals(Object o) {
 		return ((Mamifero) o).getIdentificador() == this.getIdentificador();
 	}
-	
-	public List<Mamifero> getAncestros() {
-		ArrayList <Mamifero> aux = new ArrayList<Mamifero>();
-		aux.add(madre); aux.add(padre);
-		aux.add(getAbuelaMaterna()); aux.add(getAbuelaPaterna());
-		aux.add(getAbueloPaterno()); aux.add(getAbueloMaterno());
-		return aux;
-	}
+
 	public boolean tieneComoAncestroA(Mamifero unMamifero) {
-		List<Mamifero> lista = getAncestros();
-		boolean resultado = lista.stream().anyMatch(animal -> animal.equals(unMamifero));
-		return resultado;
+	    if (unMamifero == null) {
+	        return false; 
+	    }
+
+	  /*
+	   *   if (this.equals(unMamifero)) {
+	        return false;
+	    }
+
+	   */
+	    boolean resultado = false;
+	    
+	    if (this.padre != null && this.padre.equals(unMamifero)) {
+	        return true;
+	    }
+	    if (this.madre != null && this.madre.equals(unMamifero)) {
+	        return true;
+	    }
+	    
+	    
+	    if (!resultado && this.padre != null) {
+	        resultado = this.padre.tieneComoAncestroA(unMamifero);
+	    }
+	    if (!resultado && this.madre != null) {
+	        resultado = this.madre.tieneComoAncestroA(unMamifero);
+	    }
+	    
+	    return resultado;
 	}
+
 }
+
+
+ARREGLAOD EL 
